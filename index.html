@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>內湖輔具庫存回報系統 (新增氣墊床版)</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1050px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2, h3 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select, input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        .other-volunteer-group { margin-top: 10px; display: none; }
+        button { background-color: #3498db; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; margin-top: 10px; }
+        button:hover { background-color: #2980b9; }
+        button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        .table-responsive { margin-top: 30px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 14px; }
+        th { background-color: #2c3e50; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #f1f1f1; }
+        .no-data { color: #7f8c8d; font-style: italic; }
+        .notice { font-size: 13px; color: #e74c3c; margin-top: 5px; }
+        .loading { font-weight: bold; color: #e67e22; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>內湖輔具庫存回報系統</h2>
+    
+    <form id="reportForm">
+        <div class="form-group">
+            <label for="volunteer">登錄志工</label>
+            <select id="volunteer" required>
+                <option value="" disabled selected>-- 請選擇志工姓名 --</option>
+                <option value="郭禮進">郭禮進</option>
+                <option value="王朝景">王朝景</option>
+                <option value="顏明郎">顏明郎</option>
+                <option value="其他">其他</option>
+            </select>
+            <div id="otherVolunteerGroup" class="other-volunteer-group">
+                <label for="otherVolunteer" style="color: #7f8c8d; font-size: 14px;">請輸入志工姓名：</label>
+                <input type="text" id="otherVolunteer" placeholder="請輸入您的姓名">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="bed">病床庫存</label>
+            <select id="bed" required>
+                <option value="0張">0張</option>
+                <option value="1張">1張</option>
+                <option value="2張">2張</option>
+                <option value="3張以上">3張以上</option>
+                <option value="4張以上">4張以上</option>
+            </select>
+        </div>
+
+        <!-- 新增的氣墊床欄位 -->
+        <div class="form-group">
+            <label for="airMattress">氣墊床庫存</label>
+            <select id="airMattress" required>
+                <option value="0台">可送0台</option>
+                <option value="1台">可送1台</option>
+                <option value="2台">可送3台</option>
+                <option value="3台以上">可送5台以上</option>
+                <option value="未知">未知</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="wheelchairStandard">輪椅庫存</label>
+            <select id="wheelchairStandard" required>
+                <option value="0張">0張</option>
+                <option value="1張">1張</option>
+                <option value="2張">2張</option>
+                <option value="3張以上">3張以上</option>
+                <option value="10張以上">10張以上</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="wheelchair">高背輪椅庫存</label>
+            <select id="wheelchair" required>
+                <option value="0台">0台</option>
+                <option value="1台">1台</option>
+                <option value="2台">2台</option>
+                <option value="3台">3台</option>
+                <option value="5台以上">5台以上</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="walker">ㄇ形助行器庫存</label>
+            <select id="walker" required>
+                <option value="0支">0支</option>
+                <option value="1支">1支</option>
+                <option value="2支">2支</option>
+                <option value="3支">3支</option>
+                <option value="4支以上">4支以上</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="cane">四腳手杖庫存</label>
+            <select id="cane" required>
+                <option value="0支">0支</option>
+                <option value="1支">1支</option>
+                <option value="2支">2支</option>
+                <option value="3支">3支</option>
+                <option value="4支以上">4支以上</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="showerChair">洗澡椅庫存</label>
+            <select id="showerChair" required>
+                <option value="0台">可送0台</option>
+                <option value="1台">可送1台</option>
+                <option value="2台">可送2台</option>
+                <option value="3台以上">可送3台以上</option>
+                <option value="未知">未知</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="oxygen">製氧機庫存</label>
+            <select id="oxygen" required>
+                <option value="0台">可送0台</option>
+                <option value="1台">可送1台</option>
+                <option value="2台">可送2台</option>
+                <option value="3台以上">可送3台以上</option>
+                <option value="未知">未知</option>
+            </select>
+        </div>
+
+        <button type="submit" id="submitBtn">提交庫存回報</button>
+    </form>
+
+    <h3>最新雲端回報紀錄 <span class="notice">(僅顯示 30 天內資料)</span></h3>
+    <div class="table-responsive">
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>登錄時間</th>
+                    <th>登錄志工</th>
+                    <th>病床</th>
+                    <th>氣墊床</th> <!-- 新增表格欄位 -->
+                    <th>輪椅</th> 
+                    <th>高背輪椅</th>
+                    <th>ㄇ形助行器</th>
+                    <th>四腳手杖</th>
+                    <th>洗澡椅</th>
+                    <th>製氧機</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="10" class="loading">正在連線雲端資料庫，請稍候...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzroy7Eu4rLcNTC34Qt5zdv5Vho-VrLdozQvlnojjF8V8cJjudZAhPW9zeoKlq7lePurw/exec";
+
+    // 監聽志工選擇「其他」
+    document.getElementById('volunteer').addEventListener('change', function() {
+        const otherGroup = document.getElementById('otherVolunteerGroup');
+        const otherInput = document.getElementById('otherVolunteer');
+        if (this.value === '其他') {
+            otherGroup.style.display = 'block';
+            otherInput.setAttribute('required', 'required');
+        } else {
+            otherGroup.style.display = 'none';
+            otherInput.removeAttribute('required');
+            otherInput.value = '';
+        }
+    });
+
+    // 網頁開啟時自動抓取資料
+    window.addEventListener('DOMContentLoaded', fetchCloudData);
+
+    function fetchCloudData() {
+        fetch(GAS_URL)
+        .then(response => response.json())
+        .then(data => {
+            renderTable(data);
+        })
+        .catch(error => {
+            document.getElementById('tableBody').innerHTML = `<tr><td colspan="10" style="color:red;">資料讀取失敗，請確認雲端設定。</td></tr>`;
+            console.error('Error:', error);
+        });
+    }
+
+    // 表單提交
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "資料上傳中...";
+
+        const now = new Date();
+        const timeString = now.getFullYear() + '/' + 
+                           String(now.getMonth() + 1).padStart(2, '0') + '/' + 
+                           String(now.getDate()).padStart(2, '0') + ' ' + 
+                           String(now.getHours()).padStart(2, '0') + ':' + 
+                           String(now.getMinutes()).padStart(2, '0') + ':' + 
+                           String(now.getSeconds()).padStart(2, '0');
+
+        let volunteerName = document.getElementById('volunteer').value;
+        if (volunteerName === '其他') {
+            volunteerName = document.getElementById('otherVolunteer').value.trim() || '其他志工';
+        }
+
+        const payload = {
+            timeText: timeString,
+            volunteer: volunteerName,
+            bed: document.getElementById('bed').value,
+            airMattress: document.getElementById('airMattress').value, // 氣墊床
+            wheelchairStandard: document.getElementById('wheelchairStandard').value, 
+            wheelchair: document.getElementById('wheelchair').value,                 
+            walker: document.getElementById('walker').value,
+            cane: document.getElementById('cane').value,
+            showerChair: document.getElementById('showerChair').value,
+            oxygen: document.getElementById('oxygen').value
+        };
+
+        fetch(GAS_URL, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if(response.result === "success") {
+                fetchCloudData();
+                document.getElementById('reportForm').reset();
+                document.getElementById('otherVolunteerGroup').style.display = 'none';
+                document.getElementById('otherVolunteer').removeAttribute('required');
+            }
+        })
+        .catch(error => alert("上傳失敗，請檢查網路連線。"))
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "提交庫存回報";
+        });
+    });
+
+    // 渲染表格
+    function renderTable(data) {
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+
+        if (!data || data.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="10" class="no-data">目前雲端尚無 30 天內的回報資料</td></tr>`;
+            return;
+        }
+
+        data.forEach(function(record) {
+            const row = tableBody.insertRow();
+            
+            // 時間格式化處理
+            let displayTime = record.timeText;
+            if (displayTime && displayTime.includes('T')) {
+                try {
+                    let d = new Date(displayTime);
+                    displayTime = d.getFullYear() + '/' + 
+                                  String(d.getMonth() + 1).padStart(2, '0') + '/' + 
+                                  String(d.getDate()).padStart(2, '0') + ' ' + 
+                                  String(d.getHours()).padStart(2, '0') + ':' + 
+                                  String(d.getMinutes()).padStart(2, '0');
+                } catch(e) {}
+            }
+
+            row.insertCell(0).innerText = displayTime || "";
+            row.insertCell(1).innerText = record.volunteer || "";
+            row.insertCell(2).innerText = record.bed || "";
+            row.insertCell(3).innerText = record.airMattress || "無資料"; // 氣墊床
+            row.insertCell(4).innerText = record.wheelchairStandard || ""; 
+            row.insertCell(5).innerText = record.wheelchair || "";     
+            row.insertCell(6).innerText = record.walker || "";
+            row.insertCell(7).innerText = record.cane || "";
+            row.insertCell(8).innerText = record.showerChair || "無資料"; 
+            row.insertCell(9).innerText = record.oxygen || "";
+        });
+    }
+</script>
+
+</body>
+</html>
